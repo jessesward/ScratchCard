@@ -10,8 +10,10 @@
 </head>
 <body>
 
-
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
     <div id="js--sc--container"></div>
+    </div>
+
 
     <!-- Scripts -->
     <script src="../build/scratchcard.min.js"></script>
@@ -23,7 +25,7 @@
             scratchType: SCRATCH_TYPE.LINE,
             // brushSrc: './images/brush.png',
             containerWidth: scContainer.offsetWidth,
-            containerHeight: 300,
+            containerHeight: scContainer.offsetHeight,
             imageForwardSrc: './images/scratchcard.png',
             imageBackgroundSrc: '',
             htmlBackground: '<p class="test"><strong>Hello i am HTML content !</strong></p>',
@@ -31,9 +33,10 @@
             percentToFinish: 50, // When the percent exceeds 50 on touchend event the callback will be exec.
             nPoints: 30,
             pointSize: 4,
+            scale: 'fill',
             callback: function () {
-              alert('Now the window will reload !');
-              window.location.reload();
+              // alert('Now the window will reload !');
+              // window.location.reload();
             }
           })
           sc.init();

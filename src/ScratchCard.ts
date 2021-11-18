@@ -31,6 +31,7 @@ class ScratchCard {
           alert('done.')
       },
       brushSrc: '',
+      scale: 'none',
       imageForwardSrc: './images/scratchcard.png',
       imageBackgroundSrc: './images/scratchcard-background.svg',
       htmlBackground: '',
@@ -166,7 +167,26 @@ class ScratchCard {
     return new Promise((resolve: any, reject: any) => {
       loadImage(this.config.imageForwardSrc).then((img: HTMLImageElement) => {
         this.scratchImage = img;
-        this.ctx.drawImage(this.scratchImage, 0, 0, this.canvas.width, this.canvas.height);
+
+        if (this.config.scale === 'none') {
+          this.ctx.drawImage(this.scratchImage, 0, 0, this.canvas.width, this.canvas.height);
+        } else if (this.config.scale === 'fill') {
+          
+          const scale = Math.max(this.canvas.width / this.scratchImage.width, this.canvas.height / this.scratchImage.height);
+          const x = (this.canvas.width / 2) - (this.scratchImage.width / 2) * scale;
+          const y = (this.canvas.height / 2) - (this.scratchImage.height / 2) * scale;
+          this.ctx.drawImage(this.scratchImage, x, y, this.scratchImage.width * scale, this.scratchImage.height * scale);
+
+        } else if (this.config.scale === 'fit') {
+          
+          const scale = Math.min(this.canvas.width / this.scratchImage.width, this.canvas.height / this.scratchImage.height);
+          const x = (this.canvas.width / 2) - (this.scratchImage.width / 2) * scale;
+          const y = (this.canvas.height / 2) - (this.scratchImage.height / 2) * scale;
+          this.ctx.drawImage(this.scratchImage, x, y, this.scratchImage.width * scale, this.scratchImage.height * scale);
+
+        }
+
+
         this.setBackground();
         // Resolve the promise init
         resolve();
